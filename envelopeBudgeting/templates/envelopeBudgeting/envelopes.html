@@ -1,0 +1,45 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+
+<form action = "{% url 'envelopeBudgeting:homePage' %}" method = "post">
+    {% csrf_token %}
+    <button type = "submit" name = "homebutton">Home</button>
+</form>
+<h1>{{ envelope.env_name }}</h1>
+<form action = "/envelopebudgeting/{{envelope.id}}/updateenvelope/" method = "post">
+    {% csrf_token %}
+    <label for = "env_budget">Monthly Budget:</label>
+    <input type = "number" id = "env_budget" name = "env_budget" value={{envelope.env_budget}}>
+    <br>
+    <label for = "env_funds">Funds:</label>
+    <input type = "number" id = "env_funds" name = "env_funds" value={{envelope.env_funds}}>
+    <br>
+    <input type="submit" value="Update">
+</form>
+<h3>Transactions</h3>
+<ul>
+    {% for transaction in envelope.transaction_set.all %}
+        <li>
+            {{ transaction.recipient }}: {{ transaction.amount }} - {{ transaction.t_date }}
+            <form action = "/envelopebudgeting/{{envelope.id}}/deletetransaction/" method = "post">
+                {% csrf_token %}
+                <button type = "submit" value = {{transaction.id}} name = "deleteButton">Delete</button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+<h4>Add Transaction</h4>
+<form action = "/envelopebudgeting/{{envelope.id}}/newtransaction/" method = "post">
+    {% csrf_token %}
+    <label for = "t_date">Date:</label>
+    <input type = "date" id = "t_date" name = "t_date">
+    <br>
+    <label for = "amount">Amount:</label>
+    <input type = "number" id = "amount" name = "amount">
+    <br>
+    <label for = "recipient">Recipient:</label>
+    <input type = "text" id = "recipient" name = "recipient">
+    <br>
+    <input type="submit" value="Create">
+</form>

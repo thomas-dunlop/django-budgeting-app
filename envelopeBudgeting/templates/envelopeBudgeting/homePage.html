@@ -1,0 +1,33 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'envelopeBudgeting/style.css' %}">
+
+<h1>Your Envelopes:</h1>
+{% if envelope_list%}
+    {% for envelope in envelope_list%}
+        <div id="envelopeBox">
+                <a href = "/envelopebudgeting/{{envelope.id}}/">{{envelope.env_name}}</a>
+                <br>
+                <form action = "{% url 'envelopeBudgeting:deleteenvelope' %}" method = "post">
+                    {% csrf_token %}
+                    <button type = "submit" value = {{envelope.id}} name = "deleteButton">Delete</button>
+                </form>
+        </div>
+        {% endfor %}
+{% else %}
+    <p>No envelopes are availible</p>
+{% endif %}
+<h3>Add an Envelope</h3>
+<form action = "/envelopebudgeting/newenvelope/" method = "post">
+    {% csrf_token %}
+    <label for = "env_name">Envelope Name:</label>
+    <input type = "text" id = "env_name" name = "env_name">
+    <br>
+    <label for = "env_budget">Monthly Budget:</label>
+    <input type = "number" id = "env_budget" name = "env_budget">
+    <br>
+    <label for = "env_funds">Initial Funds:</label>
+    <input type = "number" id = "env_funds" name = "env_funds">
+    <br>
+    <input type="submit" value="Create">
+</form>
