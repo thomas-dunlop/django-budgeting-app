@@ -1,6 +1,87 @@
-#envelopeBox {
-    width: 150px;
-    border: 5px solid black;
-    padding: 20px;
-    margin: 10px;
-    }
+body{        
+    padding-top: 60px;
+    padding-bottom: 40px;
+    font-family: Georgia, serif;
+}
+.fixed-header, .fixed-footer{
+    width: 100%;
+    position: fixed;        
+    background: #333;
+    padding: 10px 0;
+    color: #fff;
+}
+.fixed-header{
+    top: 0;
+}
+.fixed-footer{
+    bottom: 0;
+}
+.container{
+    width: 95%;
+    margin: 0 auto; /* Center the DIV horizontally */
+}
+
+nav a{
+    color: #fff;
+    text-decoration: none;
+    padding: 7px 25px;
+    display: inline-block;
+}
+
+.envelopeButtonContainer {
+    position: relative; 
+    height: 100px;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.envelopeButtonContainer::before {    
+      content: "";
+      background-image: url('images/envelopeicon.gif');
+      background-size: cover;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      opacity: 0.1;
+}
+
+#envelopeButtonText {
+  position: relative;
+  color: #000000;
+  font-size: large;
+  font-weight: bold;
+  text-align: center;
+}
+ 
+ .envelopeButton {
+    border: none;
+    background: white;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+}
+
+#deleteButton {
+    background:red;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+}
+
+table, th, td {
+    border: 1px solid black;
+  }
+
+  td {
+    text-align: center;
+    vertical-align: center;
+  }
+
+  table.env_table, th.env_table, td.env_table {
+    border: none
+  }

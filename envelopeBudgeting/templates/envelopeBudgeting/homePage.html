@@ -1,33 +1,64 @@
-{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Envelope Budgeting App</title>
+        {% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'envelopeBudgeting/style.css' %}">
-
-<h1>Your Envelopes:</h1>
-{% if envelope_list%}
-    {% for envelope in envelope_list%}
-        <div id="envelopeBox">
-                <a href = "/envelopebudgeting/{{envelope.id}}/">{{envelope.env_name}}</a>
-                <br>
-                <form action = "{% url 'envelopeBudgeting:deleteenvelope' %}" method = "post">
-                    {% csrf_token %}
-                    <button type = "submit" value = {{envelope.id}} name = "deleteButton">Delete</button>
-                </form>
+        <link rel="stylesheet" type="text/css" href="{% static 'envelopeBudgeting/style.css' %}">
+    </head>
+   
+    <body>
+        <div class="fixed-header">
+            <div class="container">
+                <nav>
+                    <a href="{% url 'envelopeBudgeting:homePage' %}">Home</a>
+                </nav>
+            </div>
         </div>
-        {% endfor %}
-{% else %}
-    <p>No envelopes are availible</p>
-{% endif %}
-<h3>Add an Envelope</h3>
-<form action = "/envelopebudgeting/newenvelope/" method = "post">
-    {% csrf_token %}
-    <label for = "env_name">Envelope Name:</label>
-    <input type = "text" id = "env_name" name = "env_name">
-    <br>
-    <label for = "env_budget">Monthly Budget:</label>
-    <input type = "number" id = "env_budget" name = "env_budget">
-    <br>
-    <label for = "env_funds">Initial Funds:</label>
-    <input type = "number" id = "env_funds" name = "env_funds">
-    <br>
-    <input type="submit" value="Create">
-</form>
+        <h1>Your Envelopes:</h1>
+        {% if envelope_list%}
+            <table class="env_table">
+            {% for envelope in envelope_list%}
+                <tr class="env_table">
+                    <td class="env_table">
+                        <form action = "/envelopebudgeting/{{envelope.id}}/" method = "get">
+                            {% csrf_token %}
+                            <button type = "submit" name = "envelopeButton" class = "envelopeButton">
+                                <div class="envelopeButtonContainer">
+                                    <p id="envelopeButtonText">{{envelope.env_name}}</p>
+                                </div>
+                            </button>
+                        </form>
+                    </td>
+                    <td class="env_table"></td>
+                    <td class="env_table">
+                        <form action = "{% url 'envelopeBudgeting:deleteenvelope' %}" method = "post">
+                            {% csrf_token %}
+                            <button type = "submit" value = {{envelope.id}} name = "deleteButton" id ="deleteButton">X</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No envelopes are availible</p>
+        {% endif %}
+        <h3>Add an Envelope</h3>
+        <form action = "/envelopebudgeting/newenvelope/" method = "post">
+            {% csrf_token %}
+            <label for = "env_name">Envelope Name:</label>
+            <input type = "text" id = "env_name" name = "env_name">
+            <br>
+            <label for = "env_budget">Monthly Budget:</label>
+            <input type = "number" id = "env_budget" name = "env_budget">
+            <br>
+            <label for = "env_funds">Initial Funds:</label>
+            <input type = "number" id = "env_funds" name = "env_funds">
+            <br>
+            <input type="submit" value="Create">
+        </form>
+        <div class="fixed-footer">
+            <div class="container">WIP</div>        
+        </div>
+    </body>
+</html>
